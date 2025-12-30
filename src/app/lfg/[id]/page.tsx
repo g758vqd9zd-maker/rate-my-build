@@ -2,6 +2,7 @@
 
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import Navigation from "@/components/Navigation";
 import { motion } from "framer-motion";
 import {
   ArrowLeft,
@@ -74,7 +75,9 @@ export default function LFGDetailPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-black via-zinc-950 to-black text-white">
+    <>
+      <Navigation />
+      <main className="min-h-screen bg-gradient-to-b from-black via-zinc-950 to-black text-white">
       <div className="max-w-5xl mx-auto px-6 py-12">
         {/* Back Button */}
         <Link
@@ -295,5 +298,6 @@ export default function LFGDetailPage() {
     </div>
     </div>
   </main>
+    </>
   );
 }
