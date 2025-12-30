@@ -506,7 +506,7 @@ export default function Home() {
               <p className="text-xl md:text-2xl text-zinc-300 max-w-3xl mx-auto mb-10">
                 Live roasts, instant LFG pings, meta breakdowns, and nonstop banter with 15,000+ competitive gamers
               </p>
-              
+              <a
                 href="https://discord.gg/ratemybuild"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -548,24 +548,24 @@ export default function Home() {
               </div>
               
               <div>
-                <h4className="font-bold mb-4">Resources</h4>
-<div className="space-y-2 text-sm text-zinc-400">
-<a href="#" className="block hover:text-cyan-400 transition">Meta Guide</a>
-<a href="#" className="block hover:text-cyan-400 transition">Build Templates</a>
-<a href="#" className="block hover:text-cyan-400 transition">FAQ</a>
-<a href="#" className="block hover:text-cyan-400 transition">Support</a>
-</div>
-</div>
-          <div>
-            <h4 
-            className="font-bold mb-4">Community</h4>
-            <div className="space-y-2 text-sm text-zinc-400">
-              <a href="https://discord.gg/ratemybuild" target="_blank" rel="noopener" className="block hover:text-cyan-400 transition">Discord</a>
-              <a href="#" className="block hover:text-cyan-400 transition">Twitter</a>
-              <a href="#" className="block hover:text-cyan-400 transition">YouTube</a>
-              <a href="#" className="block hover:text-cyan-400 transition">Twitch</a>
-            </div>
-          </div>
+                <h4 className="font-bold mb-4">Resources</h4>
+                <div className="space-y-2 text-sm text-zinc-400">
+                  <a href="#" className="block hover:text-cyan-400 transition">Meta Guide</a>
+                  <a href="#" className="block hover:text-cyan-400 transition">Build Templates</a>
+                  <a href="#" className="block hover:text-cyan-400 transition">FAQ</a>
+                  <a href="#" className="block hover:text-cyan-400 transition">Support</a>
+                </div>
+              </div>
+
+              <div>
+                <h4 className="font-bold mb-4">Community</h4>
+                <div className="space-y-2 text-sm text-zinc-400">
+                  <a href="https://discord.gg/ratemybuild" target="_blank" rel="noopener" className="block hover:text-cyan-400 transition">Discord</a>
+                  <a href="#" className="block hover:text-cyan-400 transition">Twitter</a>
+                  <a href="#" className="block hover:text-cyan-400 transition">YouTube</a>
+                  <a href="#" className="block hover:text-cyan-400 transition">Twitch</a>
+                </div>
+              </div>
         </div>
         
         <div className="border-t border-zinc-800 pt-8 text-center text-sm text-zinc-500">
