@@ -18,18 +18,18 @@ import {
 
 // Mock builds data
 const allBuilds = [
-  { id: "build_001", title: "Shadow Assassin God Roll", game: "Destiny 2", characterClass: "Hunter", rating: 9, meta: "S-Tier", hearts: 1247, views: 8932, createdAt: "2024-12-20" },
-  { id: "build_002", title: "Aggressive Demon Hunter Meta", game: "World of Warcraft", characterClass: "Demon Hunter", rating: 8, meta: "Meta", hearts: 982, views: 6543, createdAt: "2024-12-21" },
-  { id: "build_003", title: "Laser Sniper Controller Setup", game: "Apex Legends", characterClass: "Pathfinder", rating: 9, meta: "S-Tier", hearts: 876, views: 5234, createdAt: "2024-12-22" },
-  { id: "build_004", title: "One-Shot Arc Build", game: "Path of Exile", characterClass: "Elementalist", rating: 8, meta: "Meta", hearts: 743, views: 4321, createdAt: "2024-12-19" },
-  { id: "build_005", title: "S-Tier Mythic+ Warlock", game: "WoW Dragonflight", characterClass: "Warlock", rating: 10, meta: "S-Tier", hearts: 1534, views: 12453, createdAt: "2024-12-23" },
-  { id: "build_006", title: "Perfect Raid Tank Paladin", game: "World of Warcraft", characterClass: "Paladin", rating: 10, meta: "S-Tier", hearts: 1321, views: 9876, createdAt: "2024-12-18" },
-  { id: "build_007", title: "Diamond Controller Legend", game: "Apex Legends", characterClass: "Wraith", rating: 9, meta: "S-Tier", hearts: 1098, views: 7654, createdAt: "2024-12-24" },
-  { id: "build_008", title: "Budget Necro Build", game: "Path of Exile", characterClass: "Necromancer", rating: 6, meta: "Off-Meta", hearts: 234, views: 1432, createdAt: "2024-12-17" },
-  { id: "build_009", title: "Pre-Nerf Hunter", game: "Destiny 2", characterClass: "Hunter", rating: 7, meta: "Off-Meta", hearts: 456, views: 2341, createdAt: "2024-12-16" },
-  { id: "build_010", title: "Tank DPS Hybrid", game: "WoW", characterClass: "Death Knight", rating: 5, meta: "Off-Meta", hearts: 123, views: 876, createdAt: "2024-12-15" },
-  { id: "build_011", title: "Lightning Sorceress Endgame", game: "Path of Exile 2", characterClass: "Sorceress", rating: 9, meta: "S-Tier", hearts: 1876, views: 15432, createdAt: "2024-12-25" },
-  { id: "build_012", title: "Tanky Juggernaut", game: "Path of Exile 2", characterClass: "Juggernaut", rating: 8, meta: "Meta", hearts: 1234, views: 9876, createdAt: "2024-12-26" },
+  { id: "build_001", title: "Shadow Assassin God Roll", game: "Destiny 2", characterClass: "Hunter", rating: 9, meta: "S-Tier", hearts: 1247, views: 8932, createdAt: "2024-12-20", author: "ShadowGod42" },
+  { id: "build_002", title: "Aggressive Demon Hunter Meta", game: "World of Warcraft", characterClass: "Demon Hunter", rating: 8, meta: "Meta", hearts: 982, views: 6543, createdAt: "2024-12-21", author: "DemonSlayer" },
+  { id: "build_003", title: "Laser Sniper Controller Setup", game: "Apex Legends", characterClass: "Pathfinder", rating: 9, meta: "S-Tier", hearts: 876, views: 5234, createdAt: "2024-12-22", author: "SniperElite" },
+  { id: "build_004", title: "One-Shot Arc Build", game: "Path of Exile", characterClass: "Elementalist", rating: 8, meta: "Meta", hearts: 743, views: 4321, createdAt: "2024-12-19", author: "ArcMage" },
+  { id: "build_005", title: "S-Tier Mythic+ Warlock", game: "WoW Dragonflight", characterClass: "Warlock", rating: 10, meta: "S-Tier", hearts: 1534, views: 12453, createdAt: "2024-12-23", author: "RaidLeader420" },
+  { id: "build_006", title: "Perfect Raid Tank Paladin", game: "World of Warcraft", characterClass: "Paladin", rating: 10, meta: "S-Tier", hearts: 1321, views: 9876, createdAt: "2024-12-18", author: "TankMaster" },
+  { id: "build_007", title: "Diamond Controller Legend", game: "Apex Legends", characterClass: "Wraith", rating: 9, meta: "S-Tier", hearts: 1098, views: 7654, createdAt: "2024-12-24", author: "ApexGod" },
+  { id: "build_008", title: "Budget Necro Build", game: "Path of Exile", characterClass: "Necromancer", rating: 6, meta: "Off-Meta", hearts: 234, views: 1432, createdAt: "2024-12-17", author: "BudgetGamer" },
+  { id: "build_009", title: "Pre-Nerf Hunter", game: "Destiny 2", characterClass: "Hunter", rating: 7, meta: "Off-Meta", hearts: 456, views: 2341, createdAt: "2024-12-16", author: "HunterMain" },
+  { id: "build_010", title: "Tank DPS Hybrid", game: "WoW", characterClass: "Death Knight", rating: 5, meta: "Off-Meta", hearts: 123, views: 876, createdAt: "2024-12-15", author: "ExperimentalPlayer" },
+  { id: "build_011", title: "Lightning Sorceress Endgame", game: "Path of Exile 2", characterClass: "Sorceress", rating: 9, meta: "S-Tier", hearts: 1876, views: 15432, createdAt: "2024-12-25", author: "MapRunner" },
+  { id: "build_012", title: "Tanky Juggernaut", game: "Path of Exile 2", characterClass: "Juggernaut", rating: 8, meta: "Meta", hearts: 1234, views: 9876, createdAt: "2024-12-26", author: "BuildCrafter" },
 ];
 
 const games = [
@@ -282,31 +282,33 @@ export default function CommunityPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
+                  className="group bg-zinc-900/70 border border-zinc-800 rounded-2xl overflow-hidden hover:border-cyan-400 transition-all duration-300 h-full flex flex-col"
                 >
-                  <Link href={`/build/${build.id}`}>
-                    <div className="group bg-zinc-900/70 border border-zinc-800 rounded-2xl p-6 hover:border-cyan-400 transition-all duration-300 cursor-pointer h-full flex flex-col">
+                  {/* Build Content - Clickable */}
+                  <Link href={`/build/${build.id}`} className="flex-1 p-6">
+                    <div className="h-full flex flex-col">
                       {/* Header */}
                       <div className="flex items-start justify-between mb-4">
-                        <span
-                          className={`px-3 py-1 rounded-lg text-xs font-bold ${
-                            build.meta === "S-Tier"
-                              ? "bg-yellow-500/20 text-yellow-400 border border-yellow-500/50"
-                              : build.meta === "Meta"
-                              ? "bg-green-500/20 text-green-400 border border-green-500/50"
-                              : "bg-zinc-500/20 text-zinc-400 border border-zinc-500/50"
-                          }`}
-                        >
+                        <span className={`px-3 py-1 rounded-lg text-xs font-bold ${
+                          build.meta === "S-Tier"
+                            ? "bg-yellow-500/20 text-yellow-400 border border-yellow-500/50"
+                            : build.meta === "Meta"
+                            ? "bg-green-500/20 text-green-400 border border-green-500/50"
+                            : "bg-zinc-500/20 text-zinc-400 border border-zinc-500/50"
+                        }`}>
                           {build.meta}
                         </span>
-                        <div className="flex items-center gap-1">
-                          <Trophy className="w-4 h-4 text-cyan-400" />
-                          <span className="text-lg font-bold text-cyan-400">{build.rating}</span>
-                          <span className="text-sm text-zinc-500">/10</span>
+
+                        {/* Rating Badge */}
+                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-zinc-800 rounded-full">
+                          <Trophy className="w-4 h-4 text-yellow-400" />
+                          <span className="text-sm font-semibold">{build.rating}/10</span>
+                          <span className="text-xs text-cyan-400">{build.meta}</span>
                         </div>
                       </div>
 
                       {/* Title */}
-                      <h3 className="text-xl font-bold mb-2 group-hover:text-cyan-400 transition">
+                      <h3 className="text-xl font-bold mb-2 group-hover:text-cyan-400 transition truncate">
                         {build.title}
                       </h3>
 
@@ -317,15 +319,33 @@ export default function CommunityPage() {
                       </div>
 
                       {/* Stats */}
-                      <div className="flex items-center justify-between pt-4 border-t border-zinc-800">
-                        <div className="flex items-center gap-4 text-sm">
-                          <span className="flex items-center gap-1 text-pink-400">
-                            <Heart className="w-4 h-4" />
-                            {build.hearts}
-                          </span>
-                          <span className="text-zinc-500">{build.views.toLocaleString()} views</span>
-                        </div>
+                      <div className="flex items-center gap-4 text-sm border-t border-zinc-800 pt-4">
+                        <span className="flex items-center gap-1 text-pink-400">
+                          <Heart className="w-4 h-4" />
+                          {build.hearts}
+                        </span>
+                        <span className="text-zinc-500">{build.views.toLocaleString()} views</span>
                       </div>
+                    </div>
+                  </Link>
+
+                  {/* Author Section - Separate clickable area */}
+                  <Link
+                    href={`/profile/${build.author || 'ShadowGod42'}`}
+                    className="px-6 py-3 border-t border-zinc-800 hover:bg-zinc-800/50 transition flex items-center gap-3"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {/* Author Avatar */}
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center font-bold text-sm">
+                      {(build.author || 'S')[0]}
+                    </div>
+
+                    {/* Author Info */}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-zinc-300 truncate">
+                        {build.author || 'ShadowGod42'}
+                      </p>
+                      <p className="text-xs text-zinc-500">View Profile →</p>
                     </div>
                   </Link>
                 </motion.div>

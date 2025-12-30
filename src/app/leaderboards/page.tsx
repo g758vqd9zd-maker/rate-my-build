@@ -155,88 +155,106 @@ export default function LeaderboardPage() {
               {/* Top 3 Podium */}
               <div className="grid md:grid-cols-3 gap-6 mb-8">
                 {topBuilds.slice(0, 3).map((build, index) => (
-                  <Link key={build.id} href={`/build/${build.id}`}>
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: index * 0.1 }}
-                      className={`relative group ${
-                        index === 0 ? "md:order-2" : index === 1 ? "md:order-1" : "md:order-3"
-                      }`}
-                    >
-                      <div
-                        className={`bg-gradient-to-br rounded-2xl p-6 border-2 transition-all hover:scale-105 ${
-                          index === 0
-                            ? "from-yellow-900/40 to-orange-900/40 border-yellow-500/50 shadow-2xl shadow-yellow-500/20"
-                            : index === 1
-                            ? "from-gray-800/40 to-gray-900/40 border-gray-400/50 mt-8"
-                            : "from-orange-900/40 to-red-900/40 border-orange-500/50 mt-8"
-                        }`}
+                  <div
+                    key={build.id}
+                    className={`relative group ${
+                      index === 0 ? "md:order-2" : index === 1 ? "md:order-1" : "md:order-3"
+                    }`}
+                  >
+                    <Link href={`/build/${build.id}`}>
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: index * 0.1 }}
                       >
-                        {/* Rank Badge */}
-                        <div className="absolute -top-6 left-1/2 -translate-x-1/2">
-                          <div
-                            className={`w-16 h-16 rounded-full flex items-center justify-center shadow-2xl ${
-                              index === 0
-                                ? "bg-gradient-to-br from-yellow-400 to-yellow-600"
-                                : index === 1
-                                ? "bg-gradient-to-br from-gray-300 to-gray-500"
-                                : "bg-gradient-to-br from-orange-400 to-orange-600"
-                            }`}
-                          >
-                            {getRankIcon(build.rank)}
+                        <div
+                          className={`bg-gradient-to-br rounded-2xl p-6 border-2 transition-all hover:scale-105 ${
+                            index === 0
+                              ? "from-yellow-900/40 to-orange-900/40 border-yellow-500/50 shadow-2xl shadow-yellow-500/20"
+                              : index === 1
+                              ? "from-gray-800/40 to-gray-900/40 border-gray-400/50 mt-8"
+                              : "from-orange-900/40 to-red-900/40 border-orange-500/50 mt-8"
+                          }`}
+                        >
+                          {/* Rank Badge */}
+                          <div className="absolute -top-6 left-1/2 -translate-x-1/2">
+                            <div
+                              className={`w-16 h-16 rounded-full flex items-center justify-center shadow-2xl ${
+                                index === 0
+                                  ? "bg-gradient-to-br from-yellow-400 to-yellow-600"
+                                  : index === 1
+                                  ? "bg-gradient-to-br from-gray-300 to-gray-500"
+                                  : "bg-gradient-to-br from-orange-400 to-orange-600"
+                              }`}
+                            >
+                              {getRankIcon(build.rank)}
+                            </div>
                           </div>
-                        </div>
 
-                        <div className="mt-8 text-center">
-                          <h3 className="text-xl font-bold mb-2 group-hover:text-yellow-400 transition">
-                            {build.title}
-                          </h3>
-                          <p className="text-sm text-zinc-400 mb-4">{build.game}</p>
-                          <div className="flex items-center justify-center gap-4 mb-3">
-                            <div className="flex items-center gap-1">
-                              <Trophy className="w-5 h-5 text-cyan-400" />
-                              <span className="text-cyan-400 font-bold text-lg">{build.rating}/10</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <Heart className="w-5 h-5 text-pink-400" />
-                              <span className="font-semibold">{build.hearts}</span>
+                          <div className="mt-8 text-center">
+                            <h3 className="text-xl font-bold mb-2 group-hover:text-yellow-400 transition">
+                              {build.title}
+                            </h3>
+                            <p className="text-sm text-zinc-400 mb-4">{build.game}</p>
+                            <div className="flex items-center justify-center gap-4 mb-3">
+                              <div className="flex items-center gap-1">
+                                <Trophy className="w-5 h-5 text-cyan-400" />
+                                <span className="text-cyan-400 font-bold text-lg">{build.rating}/10</span>
+                              </div>
+                              <div className="flex items-center gap-1">
+                                <Heart className="w-5 h-5 text-pink-400" />
+                                <span className="font-semibold">{build.hearts}</span>
+                              </div>
                             </div>
                           </div>
-                          <div className="text-sm text-zinc-500">by {build.author}</div>
                         </div>
-                      </div>
-                    </motion.div>
-                  </Link>
+                      </motion.div>
+                    </Link>
+
+                    {/* Author Link */}
+                    <Link
+                      href={`/profile/${build.author}`}
+                      className="block mt-3 text-center text-sm text-zinc-400 hover:text-cyan-400 transition"
+                    >
+                      by <span className="font-semibold">{build.author}</span> →
+                    </Link>
+                  </div>
                 ))}
               </div>
 
               {/* Rest of Top Builds */}
               <div className="bg-zinc-900/70 border border-zinc-800 rounded-2xl overflow-hidden">
                 {topBuilds.slice(3).map((build, index) => (
-                  <Link key={build.id} href={`/build/${build.id}`}>
-                    <motion.div
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.05 }}
-                      className="flex items-center gap-6 p-6 border-b border-zinc-800 last:border-b-0 hover:bg-zinc-800/50 transition group"
-                    >
-                      {/* Rank */}
-                      <div className="w-16 flex items-center justify-center">
-                        {getRankIcon(build.rank)}
-                      </div>
-
-                      {/* Build Info */}
-                      <div className="flex-1 min-w-0">
-                        <h3 className="text-lg font-bold mb-1 group-hover:text-yellow-400 transition truncate">
-                          {build.title}
-                        </h3>
-                        <div className="flex items-center gap-3 text-sm text-zinc-400">
-                          <span>{build.game}</span>
-                          <span>•</span>
-                          <span>by {build.author}</span>
+                  <div key={build.id}>
+                    <Link href={`/build/${build.id}`}>
+                      <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.05 }}
+                        className="flex items-center gap-6 p-6 border-b border-zinc-800 last:border-b-0 hover:bg-zinc-800/50 transition group"
+                      >
+                        {/* Rank */}
+                        <div className="w-16 flex items-center justify-center">
+                          {getRankIcon(build.rank)}
                         </div>
-                      </div>
+
+                        {/* Build Info */}
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-lg font-bold mb-1 group-hover:text-yellow-400 transition truncate">
+                            {build.title}
+                          </h3>
+                          <div className="flex items-center gap-3 text-sm text-zinc-400">
+                            <span>{build.game}</span>
+                            <span>•</span>
+                            <Link
+                              href={`/profile/${build.author}`}
+                              className="hover:text-cyan-400 transition"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              by {build.author}
+                            </Link>
+                          </div>
+                        </div>
 
                       {/* Stats */}
                       <div className="flex items-center gap-6 text-sm">
@@ -260,6 +278,7 @@ export default function LeaderboardPage() {
                       </div>
                     </motion.div>
                   </Link>
+                  </div>
                 ))}
               </div>
             </motion.div>
