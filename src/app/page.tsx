@@ -506,6 +506,7 @@ export default function Home() {
               <p className="text-xl md:text-2xl text-zinc-300 max-w-3xl mx-auto mb-10">
                 Live roasts, instant LFG pings, meta breakdowns, and nonstop banter with 15,000+ competitive gamers
               </p>
+
               <a
                 href="https://discord.gg/ratemybuild"
                 target="_blank"
