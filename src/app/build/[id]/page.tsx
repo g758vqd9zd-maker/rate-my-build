@@ -88,7 +88,7 @@ export default function BuildDetailPage() {
 
   const handleComment = () => {
     if (comment.trim()) {
-      console.log("Comment:", comment);
+      // TODO: Send comment to backend
       setComment("");
       // Add to DB later
     }

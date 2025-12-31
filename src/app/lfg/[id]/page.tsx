@@ -56,8 +56,7 @@ export default function LFGDetailPage() {
   const handleJoinRequest = () => {
     if (joinMessage.trim()) {
       setHasRequested(true);
-      // In production: Send API request to join
-      console.log("Join request:", joinMessage);
+      // TODO: Send API request to join with joinMessage
     }
   };
 
