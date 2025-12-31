@@ -25,6 +25,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <Link href="/lfg" className="hover:text-cyan-400">
                 LFG
               </Link>
+              <Link href="/leaderboards" className="hover:text-cyan-400">
+                Leaderboards
+              </Link>
               <Link
                 href="/submit"
                 className="bg-cyan-500 hover:bg-cyan-400 text-black px-4 py-2 rounded-lg font-semibold"
