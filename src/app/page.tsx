@@ -542,7 +542,7 @@ export default function Home() {
                   <Link href="/submit" className="block hover:text-cyan-400 transition">Submit Build</Link>
                   <Link href="/community" className="block hover:text-cyan-400 transition">Community</Link>
                   <Link href="/lfg" className="block hover:text-cyan-400 transition">LFG Board</Link>
-                  <Link href="/leaderboards" className="block hover:text-cyan-400 transition">Leaderboards</Link>
+                  <Link href="/leaderboard" className="block hover:text-cyan-400 transition">Leaderboards</Link>
                 </div>
               </div>
               

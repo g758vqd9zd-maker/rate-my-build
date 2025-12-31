@@ -27,7 +27,7 @@ export default function Navigation() {
           <Link href="/lfg" className="text-zinc-300 hover:text-cyan-400 transition font-medium">
             LFG
           </Link>
-          <Link href="/leaderboards" className="text-zinc-300 hover:text-cyan-400 transition font-medium">
+          <Link href="/leaderboard" className="text-zinc-300 hover:text-cyan-400 transition font-medium">
             Leaderboards
           </Link>
           <Link href="/profile/ShadowGod42" className="text-zinc-300 hover:text-cyan-400 transition font-medium">

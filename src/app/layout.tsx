@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <Link href="/lfg" className="hover:text-cyan-400">
                 LFG
               </Link>
-              <Link href="/leaderboards" className="hover:text-cyan-400">
+              <Link href="/leaderboard" className="hover:text-cyan-400">
                 Leaderboards
               </Link>
               <Link
