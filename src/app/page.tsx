@@ -136,6 +136,27 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: "easeOut" }}
             >
+              {/* SILLY TEST BANNER - Claude was here! 🎉 */}
+              <motion.div
+                animate={{
+                  scale: [1, 1.1, 1],
+                  rotate: [-2, 2, -2],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="mb-8 p-6 bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 rounded-3xl border-4 border-yellow-400 shadow-2xl"
+              >
+                <p className="text-4xl md:text-6xl font-black text-white drop-shadow-lg">
+                  🚀 HELLO! I&apos;M WORKING! 🎮
+                </p>
+                <p className="text-2xl text-yellow-300 font-bold mt-2">
+                  If you can see this silly banner, the dev server is running! ✨
+                </p>
+              </motion.div>
+
               <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tight leading-none mb-6">
                 Find Your Squad.
                 <br />
