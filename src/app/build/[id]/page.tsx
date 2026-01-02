@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import Navigation from "@/app/components/Navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
@@ -95,7 +96,9 @@ export default function BuildDetailPage() {
 
   if (!build) {
     return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+      <>
+        <Navigation />
+        <div className="min-h-screen bg-black text-white flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Build Not Found</h1>
           <Link href="/" className="text-cyan-400 hover:underline">
@@ -103,11 +106,14 @@ export default function BuildDetailPage() {
           </Link>
         </div>
       </div>
+      </>
     );
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-black via-zinc-950 to-black text-white">
+    <>
+      <Navigation />
+      <main className="min-h-screen bg-gradient-to-b from-black via-zinc-950 to-black text-white">
       <div className="max-w-6xl mx-auto px-6 py-12">
         {/* Back Button */}
         <Link
@@ -402,5 +408,6 @@ export default function BuildDetailPage() {
         </motion.div>
       </div>
     </main>
+    </>
   );
 }

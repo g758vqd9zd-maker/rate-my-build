@@ -1,0 +1,288 @@
+// Prisma Schema for Rate My Build - Reputation System
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// USER & AUTHENTICATION
+// ============================================
+model User {
+  id            String   @id @default(cuid())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Discord OAuth
+  discordId     String   @unique
+  username      String
+  discriminator String?
+  avatar        String?
+  email         String?  @unique
+
+  // Reputation Data
+  reputation    Reputation?
+
+  // Relationships
+  builds        Build[]
+  sessions      SessionParticipant[]
+  endorsementsGiven     Endorsement[] @relation("EndorsementGiver")
+  endorsementsReceived  Endorsement[] @relation("EndorsementReceiver")
+  reportsGiven  Report[] @relation("ReportGiver")
+  reportsReceived Report[] @relation("ReportReceiver")
+  hostedSessions Session[] @relation("SessionHost")
+
+  @@index([discordId])
+  @@index([username])
+}
+
+// ============================================
+// REPUTATION SYSTEM
+// ============================================
+model Reputation {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Core Score
+  currentScore    Float    @default(3.0)  // Base: 3.0, Range: 0.0-5.0
+
+  // Statistics
+  totalSessions   Int      @default(0)
+  completedSessions Int    @default(0)
+  noShows         Int      @default(0)
+  lateArrivals    Int      @default(0)
+  earlyLeaves     Int      @default(0)
+  cancellations   Int      @default(0)
+  currentStreak   Int      @default(0)
+  longestStreak   Int      @default(0)
+
+  // Grace Period (first 5 sessions don't count negatively)
+  isGracePeriod   Boolean  @default(true)
+  graceSessions   Int      @default(0)
+
+  // Forgiveness System
+  goodSessionsBank Int     @default(0) // Good sessions available to offset bad ones
+
+  // Timestamps
+  lastSessionAt   DateTime?
+  lastDecayAt     DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // History for decay calculation
+  events          ReputationEvent[]
+
+  @@index([currentScore])
+  @@index([userId])
+}
+
+// Track every reputation change for decay/history
+model ReputationEvent {
+  id           String   @id @default(cuid())
+  reputationId String
+  reputation   Reputation @relation(fields: [reputationId], references: [id], onDelete: Cascade)
+
+  eventType    ReputationEventType
+  scoreChange  Float    // Can be positive or negative
+  reason       String?
+
+  // Metadata for specific events
+  sessionId    String?
+  session      Session? @relation(fields: [sessionId], references: [id])
+
+  createdAt    DateTime @default(now())
+
+  // For decay calculation (events older than 90 days get 50% weight)
+  decayApplied Boolean  @default(false)
+  decayedScore Float?   // Score after decay applied
+
+  @@index([reputationId])
+  @@index([createdAt])
+  @@index([sessionId])
+}
+
+enum ReputationEventType {
+  SESSION_COMPLETED
+  SESSION_ON_TIME
+  HOST_ENDORSEMENT
+  STREAK_BONUS
+  SEASON_COMPLETION
+  LATE_ARRIVAL
+  NO_SHOW
+  EARLY_LEAVE
+  CANCELLATION
+  TOXIC_BEHAVIOR
+  KICKED_FROM_GROUP
+  MANUAL_ADJUSTMENT
+  DECAY_APPLIED
+  SEASONAL_RESET
+}
+
+// ============================================
+// SESSIONS & GAMEPLAY
+// ============================================
+model Session {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Session Details
+  title       String
+  description String?
+  scheduledStart DateTime
+  scheduledEnd   DateTime?
+  actualStart    DateTime?
+  actualEnd      DateTime?
+
+  // Host
+  hostId      String
+  host        User     @relation("SessionHost", fields: [hostId], references: [id])
+
+  // Status
+  status      SessionStatus @default(SCHEDULED)
+
+  // Participants
+  participants SessionParticipant[]
+
+  // Reputation tracking
+  reputationEvents ReputationEvent[]
+
+  @@index([hostId])
+  @@index([scheduledStart])
+  @@index([status])
+}
+
+enum SessionStatus {
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+model SessionParticipant {
+  id        String   @id @default(cuid())
+  sessionId String
+  session   Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Attendance tracking
+  status           ParticipantStatus @default(REGISTERED)
+  joinedAt         DateTime?
+  leftAt           DateTime?
+  minutesLate      Int?     // NULL if on time
+  completionPercent Int?    // % of session attended (0-100)
+
+  // Actions
+  wasKicked        Boolean  @default(false)
+  kickedAt         DateTime?
+  cancelledAt      DateTime?
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@unique([sessionId, userId])
+  @@index([userId])
+  @@index([sessionId])
+}
+
+enum ParticipantStatus {
+  REGISTERED
+  CONFIRMED
+  JOINED
+  COMPLETED
+  NO_SHOW
+  LATE
+  LEFT_EARLY
+  KICKED
+  CANCELLED
+}
+
+// ============================================
+// ENDORSEMENTS
+// ============================================
+model Endorsement {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  giverId   String
+  giver     User     @relation("EndorsementGiver", fields: [giverId], references: [id], onDelete: Cascade)
+
+  receiverId String
+  receiver   User    @relation("EndorsementReceiver", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  sessionId String?  // Optional: tied to a specific session
+
+  message   String?
+  value     Float    @default(0.05) // Default +0.05 reputation
+
+  @@unique([giverId, receiverId, sessionId])
+  @@index([receiverId])
+  @@index([giverId])
+}
+
+// ============================================
+// REPORTS & MODERATION
+// ============================================
+model Report {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  reporterId String
+  reporter   User    @relation("ReportGiver", fields: [reporterId], references: [id], onDelete: Cascade)
+
+  reportedId String
+  reported   User    @relation("ReportReceiver", fields: [reportedId], references: [id], onDelete: Cascade)
+
+  sessionId  String? // Optional: context for the report
+
+  reason     ReportReason
+  details    String?
+
+  // Moderation
+  reviewed   Boolean  @default(false)
+  reviewedAt DateTime?
+  reviewedBy String?
+  action     String?  // What action was taken
+
+  @@index([reportedId])
+  @@index([reviewed])
+}
+
+enum ReportReason {
+  TOXIC_BEHAVIOR
+  AFK_GRIEFING
+  HARASSMENT
+  CHEATING
+  SPAM
+  OTHER
+}
+
+// ============================================
+// BUILDS (Simplified for reputation context)
+// ============================================
+model Build {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  title     String
+  description String?
+
+  // Build data (simplified)
+  class     String?
+  spec      String?
+
+  // Ratings affect author reputation indirectly
+  rating    Float?
+  ratingCount Int   @default(0)
+
+  @@index([authorId])
+}

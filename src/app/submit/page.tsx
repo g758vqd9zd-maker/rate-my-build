@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Navigation from "@/app/components/Navigation";
 import { Save, Flame, AlertCircle, Loader2, Trophy, Target, Zap, Sparkles, TrendingUp, Copy, Check } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -216,7 +217,9 @@ export default function SubmitBuild() {
   };
 
   return (
-    <main className="min-h-screen text-white pt-12 pb-24 relative overflow-hidden">
+    <>
+      <Navigation />
+      <main className="min-h-screen text-white pt-12 pb-24 relative overflow-hidden">
       {/* Animated Background */}
       <div className="fixed inset-0 -z-10 bg-gradient-to-br from-black via-purple-950/30 to-black pointer-events-none" />
       
@@ -884,5 +887,6 @@ export default function SubmitBuild() {
         </AnimatePresence>
       </div>
     </main>
+    </>
   );
 }

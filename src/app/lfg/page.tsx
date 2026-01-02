@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Navigation from "@/app/components/Navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowLeft,
@@ -154,7 +155,9 @@ export default function LFGPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-black via-zinc-950 to-black text-white">
+    <>
+      <Navigation />
+      <main className="min-h-screen bg-gradient-to-b from-black via-zinc-950 to-black text-white">
       <div className="max-w-7xl mx-auto px-6 py-12">
         {/* Header */}
         <div className="mb-8">
@@ -531,5 +534,6 @@ export default function LFGPage() {
         )}
       </AnimatePresence>
     </main>
+    </>
   );
 }
